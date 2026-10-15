@@ -61,15 +61,21 @@ Inspirado en las míticas máquinas tragamonedas de barrio latinoamericano, basa
 - **Bandeja Metálica y Expulsión Real de Monedas**:
   - Al cobrar o ganar premios grandes, la máquina expulsa monedas doradas animadas que caen y rebotan en la bandeja inferior con traqueteo metálico.
 
+## 🌐 Enlace a GitHub Pages (Juego en Vivo)
+
+Puedes jugar directamente en línea a través de GitHub Pages:
+
+👉 **[https://scorguss.github.io/maldonado-leonardo-jueg-gr3/](https://scorguss.github.io/maldonado-leonardo-jueg-gr3/)**
+
 ---
 
-## 🚀 Cómo Ejecutar el Proyecto
+## 🚀 Cómo Ejecutar el Proyecto Localmente
 
-Puedes abrir directamente el archivo [first-game/index.html](file:///c:/Users/Leo/Desktop/EPN/JuegosInter/maldonado-leonardo-jueg-gr3/first-game/index.html) en tu navegador habitual, o levantarlo con un servidor local:
+Puedes abrir directamente el archivo [index.html](file:///c:/Users/Leo/Desktop/EPN/JuegosInter/maldonado-leonardo-jueg-gr3/index.html) en tu navegador habitual, o levantarlo con un servidor local:
 
 ```bash
-# Servidor local con Python (ya activo en puerto 8080)
-python -m http.server 8080 --directory first-game
+# Servidor local con Python (en la raíz del proyecto)
+python -m http.server 8080
 
 # Acceso en el navegador
 http://localhost:8080
