@@ -1491,7 +1491,10 @@ const config = {
     height: 700,
     scale: {
         mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        parent: 'game-container',
+        width: 1000,
+        height: 700
     },
     physics: {
         default: 'arcade',
@@ -1501,5 +1504,5 @@ const config = {
 };
 
 window.addEventListener('load', () => {
-    new Phaser.Game(config);
+    window.phaserGame = new Phaser.Game(config);
 });

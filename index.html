@@ -351,10 +351,11 @@
            2. VISTA BLACKJACK 21 ROYALE
            ========================================================= */
         #game-container {
-            width: 1000px;
-            height: 700px;
-            max-width: 100vw;
-            max-height: 85vh;
+            width: min(96vw, calc((100vh - 150px) * 1.42857));
+            max-width: 1140px;
+            aspect-ratio: 1000 / 700;
+            height: auto;
+            max-height: calc(100vh - 150px);
             border-radius: 20px;
             overflow: hidden;
             position: relative;
@@ -365,11 +366,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            margin: 0 auto;
         }
 
         #game-container canvas {
             display: block;
             border-radius: 16px;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain;
         }
 
         .footer-shortcuts {
@@ -1458,6 +1463,22 @@
             document.getElementById('view-blackjack').classList.toggle('active-view', viewName === 'blackjack');
             document.getElementById('view-frutitas').classList.toggle('active-view', viewName === 'frutitas');
 
+            // Refrescar y adaptar mesa de Blackjack automáticamente
+            if (viewName === 'blackjack') {
+                const refreshBlackjackScale = () => {
+                    if (window.phaserGame && window.phaserGame.scale) {
+                        window.phaserGame.scale.refresh();
+                    } else if (window.blackjackGame && window.blackjackGame.scale) {
+                        window.blackjackGame.scale.refresh();
+                    }
+                };
+                refreshBlackjackScale();
+                requestAnimationFrame(refreshBlackjackScale);
+                setTimeout(refreshBlackjackScale, 50);
+                setTimeout(refreshBlackjackScale, 150);
+                setTimeout(refreshBlackjackScale, 300);
+            }
+
             // Inicializar Suerte & Fruta si entra a la sección
             if (viewName === 'frutitas' && window.frutitasGame) {
                 window.frutitasGame.init();
@@ -1466,6 +1487,32 @@
             // Scroll al inicio suave
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        // Observador de redimensionamiento automático para adaptar la mesa de Blackjack a cualquier pantalla
+        const bjContainer = document.getElementById('game-container');
+        const triggerScaleRefresh = () => {
+            if (window.phaserGame && window.phaserGame.scale) {
+                window.phaserGame.scale.refresh();
+            } else if (window.blackjackGame && window.blackjackGame.scale) {
+                window.blackjackGame.scale.refresh();
+            }
+        };
+
+        if (window.ResizeObserver && bjContainer) {
+            const ro = new ResizeObserver((entries) => {
+                for (let entry of entries) {
+                    if (entry.contentRect.width > 0 && entry.contentRect.height > 0) {
+                        triggerScaleRefresh();
+                    }
+                }
+            });
+            ro.observe(bjContainer);
+        }
+
+        window.addEventListener('resize', triggerScaleRefresh);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(triggerScaleRefresh, 120);
+        });
 
         // Control de Sonido Global
         const soundBtn = document.getElementById('btn-sound-global');
